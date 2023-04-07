@@ -20,6 +20,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 
 	private LinkedBlockingQueue<Projectile> projectiles;
+	private LinkedBlockingQueue<Enemy> enemies;
 	
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -28,6 +29,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		tileMap = new TileMap();
 		enemy = new Enemy(0, 0);
 		projectiles = new LinkedBlockingQueue<>();
+		enemies = new LinkedBlockingQueue<>();
 
 		this.addKeyListener(this);
 		this.addMouseListener(this);
@@ -46,10 +48,17 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 				System.out.println("saiu bala");
 			}
 		}
+		for (Enemy enemy :
+				enemies) {
+			enemy.tick(projectiles,tileMap,player);
+			if(enemy.isDead()){
+				enemies.remove(enemy);
+			}
+		}
 
 		tileMap.tick();
 		player.tick(tileMap,mousePointXCenter);
-		enemy.tick(player);
+
 
 		
 		if(player.intersects(enemy))
@@ -79,14 +88,18 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		
 		player.render(graphics);
 		
-		enemy.render(graphics);
+
 
 		for (Projectile projectile:
 			 projectiles){
 			projectile.render(graphics);
 
 		}
-		
+		for (Enemy enemy:
+				enemies){
+			enemy.render(graphics);
+
+		}
 		
 		bufferStrategy.show();
 		
@@ -175,6 +188,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1){
 
 			projectiles.add(new Projectile(player.x,player.y,player.height,mousePoint ));
+		} else {
+			enemies.add(new Enemy(mousePoint.x,mousePoint.y));
 		}
 		System.out.println(mousePoint);
 	}

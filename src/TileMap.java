@@ -16,10 +16,10 @@ public class TileMap {
 
 		
 	}
-	public boolean isFree(int playerX, int playerY,Player player) {
+	public boolean isFree(int spriteX, int spriteY,Rectangle sprite) {
 		// TODO Auto-generated method stub
 		for (Tile tile : tileList) {
-			if(tile.intersects(new Rectangle(playerX,playerY,player.width,player.height)))
+			if(tile.intersects(new Rectangle(spriteX,spriteY,sprite.width,sprite.height)))
 				return false;
 		}
 		return true;
