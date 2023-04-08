@@ -7,7 +7,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
 
 	public static int WIDTH = 960, HEIGHT = 960;
-	
+
+	public static int points;
 	private Graphics graphics;
 	private Player player;
 	private TileMap tileMap;
@@ -20,6 +21,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	private LinkedBlockingQueue<Enemy> enemies;
 
 	private LinkedBlockingQueue<AirPlane> airPlanes;
+
+	private LinkedBlockingQueue<Explosion> explosions;
 	
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -30,6 +33,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		projectiles = new LinkedBlockingQueue<>();
 		enemies = new LinkedBlockingQueue<>();
 		airPlanes = new LinkedBlockingQueue<>();
+		explosions = new LinkedBlockingQueue<>();
+
+		points = 0;
 		this.addKeyListener(this);
 		this.addMouseListener(this);
 	}
@@ -58,9 +64,19 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		for (Enemy enemy :
 				enemies) {
 			enemy.tick(projectiles,tileMap,player);
-			if(enemy.isDead()){
+
+			if(enemy.isDead() || enemy.intersects(player)){
+				if(enemy.isDeadOnFloor() || enemy.intersects(player)){
+					explosions.add(new Explosion(enemy.x,enemy.y));
+				}
 				enemies.remove(enemy);
 			}
+		}
+		for (Explosion explosion:
+			 explosions) {
+			explosion.tick();
+			if(explosion.end())
+				explosions.remove(explosion);
 		}
 
 		tileMap.tick();
@@ -76,7 +92,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public void render() { //desenha estado
 		BufferStrategy bufferStrategy = this.getBufferStrategy();
 		if(bufferStrategy == null) {
-			this.createBufferStrategy(3);
+			this.createBufferStrategy(5);
 			return;
 		}
 			
@@ -104,8 +120,17 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			airPlane.render(graphics);
 
 		}
-		
+		for (Explosion explosion:
+				explosions) {
+			explosion.render(graphics);
+		}
+		//graphics.getFont().s
+		graphics.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte com tamanho 20
+		graphics.setColor(Color.WHITE); // Define a cor como branca
+		graphics.drawString("Pontos: " + String.valueOf(points), 50, 50);
 		bufferStrategy.show();
+
+
 		
 	}
 	public void drawGraphic(int positionX, int positionY,int width ,int height, Color color) {
@@ -195,7 +220,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1){
 
-			projectiles.add(new Projectile(player.x,player.y,player.height,mousePoint ));
+			projectiles.add(new Projectile(player.x+player.width/4,player.y,player.height,mousePoint ));
 		} else {
 			//enemies.add(new Enemy(mousePoint.x,mousePoint.y));
 

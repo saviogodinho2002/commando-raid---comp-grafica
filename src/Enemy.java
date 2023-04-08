@@ -6,6 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Enemy extends Rectangle{
 	private int enemySpeed = 4;
 	private int enemyGravity = 2;
+	private BufferedImage enemy;
 	private boolean dead;
 	private boolean deadOnFloor;
 	private boolean onGround;
@@ -16,6 +17,7 @@ public class Enemy extends Rectangle{
 		dead = false;
 		onGround = false;
 		deadOnFloor = false;
+		this.enemy =SpriteSheet.enemy;
 	}
 	public void tick(LinkedBlockingQueue<Projectile> projectiles, TileMap tileMap, Player player) {
 		for (Projectile projectile:
@@ -24,6 +26,8 @@ public class Enemy extends Rectangle{
 				this.dead = true;
 				destroyParaChute();
 				projectiles.remove(projectile);
+				deadOnFloor = false;
+				Game.points++;
 			} else if (!paraChute.destroyed && paraChute.intersects(projectile)) {
 				paraChute.destroyed = true;
 				this.enemyGravity *= 4;
@@ -40,19 +44,24 @@ public class Enemy extends Rectangle{
 		else {
 			if(deadOnFloor){
 				this.dead = true;
-			}else if(this.x < player.x) {
+				Game.points+=2;
+			}else if(this.x < player.x+player.width/2) {
 				this.x += enemySpeed;
-			}else if(this.x > player.x) {
+			}else if(this.x > player.x-player.width/2) {
 				this.x -= enemySpeed;
-			}else {
-				///TODO dar uma coisada no player
+
 			}
 		}
 
 	}
+
 	private void destroyParaChute(){
 		paraChute.paraChute = null;
 		paraChute.destroyed = true;
+
+	}
+	public boolean isDeadOnFloor(){
+		return  this.deadOnFloor;
 	}
 	private void verifyColission(TileMap tileMap){
 
@@ -67,7 +76,7 @@ public class Enemy extends Rectangle{
 		}
 	}
 	public void render(Graphics graphics) {
-		graphics.drawImage(SpriteSheet.enemy, this.x,this.y,this.width,this.height, null);
+		graphics.drawImage(enemy, this.x,this.y,this.width,this.height, null);
 		paraChute.render(graphics);
 	}
 
@@ -89,17 +98,6 @@ public class Enemy extends Rectangle{
 			}
 			public void tick(Enemy enemy) {
 				this.y += enemy.enemyGravity;
-			/*if(this.x < player.x) {
-				this.x += enemySpeed;
-			}else if(this.x > player.x) {
-				this.x -= enemySpeed;
-			}
-
-			if(this.y > player.y) {
-				this.y -= enemySpeed;
-			}else if(this.y < player.y) {
-				this.y += enemySpeed;
-			}*/
 
 			}
 			public void render(Graphics graphics) {

@@ -33,7 +33,7 @@ public class AirPlane extends Rectangle {
             this.x -= airPlaneSpeed;
         }
         double rate = random.nextDouble(100)+1;
-        if(rate < 1.5){
+        if(rate < 2){
             enemies.add(new Enemy(this.x,this.y));
         }
 		/*if(this.x < player.x) {

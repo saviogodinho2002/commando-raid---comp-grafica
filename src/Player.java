@@ -80,16 +80,22 @@ public class Player extends Rectangle {
 
 		AffineTransform transform = g2d.getTransform();
 
-		g2d.translate(x + width / 2, y + height / 2);
+		int centerX = x + width / 2; // Calcula o centro x da imagem
+		int centerY = y + height / 2; // Calcula o centro y da imagem
+
+		g2d.translate(centerX, centerY);
+
+		g2d.rotate(cannonAngle, rotateCannonGun.getWidth() / 2.0, 2*rotateCannonGun.getHeight()); // Rotação em torno do centro da imagem
 
 
-		g2d.rotate(cannonAngle,  0 ,height/3); // Ajustado o ponto de translação
+		g2d.drawImage(rotateCannonGun, -rotateCannonGun.getWidth() / 2, -rotateCannonGun.getHeight() / 2, width, height, null); // Desenho da imagem com translação para o centro
 
-		g2d.drawImage(rotateCannonGun, -width / 2, -height / 2, width, height, null);
+
 		g2d.setTransform(transform);
 		//graphics.drawImage(rotateCannonGun,this.x,this.y-this.width/2,this.width,this.height,null);
 
-		graphics.drawImage(cannonBase,this.x,this.y+this.width/2,this.width,this.height,null);
+		graphics.drawImage(cannonBase,this.x+width/4,this.y+this.width,this.width,this.height,null);
+
 	}
 
 

@@ -1,6 +1,6 @@
+import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ public class SpriteSheet {
 	public static BufferedImage spriteSheet;
 	public static BufferedImage playerFront,playerBack,playerLeft,playerRight, cannonGun, cannonBase, projectile;
 	public static BufferedImage wallTile;
-	public static BufferedImage enemy;
+	public static BufferedImage enemy,explosion;
 	public static BufferedImage airPlane;
 	public static BufferedImage paraChute;
 	public SpriteSheet() {
@@ -27,7 +27,9 @@ public class SpriteSheet {
 
 		paraChute =  this.getSprite(260, 269, 16, 16);
 		enemy =  this.getSprite(231, 11, 16, 16);
-		airPlane = getSprite(285, 272, 16, 16);
+		airPlane = getSprite(285, 272, 45, 13);
+
+		explosion =  this.getSprite(191, 185, 16, 16);
 		wallTile = getSprite(283, 238, 16, 16);
 
 	}
@@ -37,11 +39,32 @@ public class SpriteSheet {
 	}
 	public static BufferedImage reverseImage(BufferedImage bufferedImage){
 		AffineTransform affineTransform = AffineTransform.getScaleInstance(-1, 1);
-		affineTransform.translate(-16, 0);
+		affineTransform.translate(-bufferedImage.getWidth(), 0);
 		AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 
 		return  affineTransformOp.filter(bufferedImage, null);
 
+	}
+	public  static BufferedImage deepCopy(BufferedImage bi) {
+		ColorModel cm = bi.getColorModel();
+		boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+		WritableRaster raster = bi.copyData(bi.getRaster().createCompatibleWritableRaster());
+		return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+	}
+	public static BufferedImage changeAlpha(BufferedImage source, float nalpha){
+
+		BufferedImage alteredImage = new BufferedImage(source.getWidth(), source.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+
+		Graphics2D g2d = alteredImage.createGraphics();
+
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, nalpha/255f));
+
+
+		g2d.drawImage(source, 0, 0, null);
+
+		g2d.dispose();
+		return alteredImage;
 	}
 	public static  BufferedImage getSpriteSheet() {
 		return spriteSheet;

@@ -38,11 +38,11 @@ public class Projectile extends Rectangle {
         directionX = (mousePoint.x - this.x) ;
         directionY = (mousePoint.y - this.y);
         double magnitude = Math.sqrt(directionX * directionX + directionY * directionY);
-        if(magnitude!=0){
+
 
             directionX = directionX /magnitude ;
             directionY = directionY /magnitude;
-        }
+
 
 
     }
