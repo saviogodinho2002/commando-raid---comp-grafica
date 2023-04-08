@@ -7,7 +7,7 @@ public class Enemy extends Rectangle{
 	private int enemySpeed = 4;
 	private int enemyGravity = 2;
 	private boolean dead;
-
+	private boolean deadOnFloor;
 	private boolean onGround;
 	ParaChute paraChute;
 	public Enemy(int enemyX,int enemyY) {
@@ -15,6 +15,7 @@ public class Enemy extends Rectangle{
 		paraChute = new ParaChute(enemyX-(int)(this.width*0.75),enemyY-this.height*2);
 		dead = false;
 		onGround = false;
+		deadOnFloor = false;
 	}
 	public void tick(LinkedBlockingQueue<Projectile> projectiles, TileMap tileMap, Player player) {
 		for (Projectile projectile:
@@ -22,9 +23,13 @@ public class Enemy extends Rectangle{
 			if(this.intersects(projectile)){
 				this.dead = true;
 				destroyParaChute();
+				projectiles.remove(projectile);
 			} else if (!paraChute.destroyed && paraChute.intersects(projectile)) {
 				paraChute.destroyed = true;
 				this.enemyGravity *= 4;
+				if(this.y < 2*Game.HEIGHT/3){
+					deadOnFloor = true;
+				}
 			}
 		}
 		if(!onGround){
@@ -33,7 +38,9 @@ public class Enemy extends Rectangle{
 			paraChute.tick(this);
 		}
 		else {
-			if(this.x < player.x) {
+			if(deadOnFloor){
+				this.dead = true;
+			}else if(this.x < player.x) {
 				this.x += enemySpeed;
 			}else if(this.x > player.x) {
 				this.x -= enemySpeed;
@@ -42,19 +49,6 @@ public class Enemy extends Rectangle{
 			}
 		}
 
-
-		/*if(this.x < player.x) {
-			this.x += enemySpeed;
-		}else if(this.x > player.x) {
-			this.x -= enemySpeed;
-		}
-		
-		if(this.y > player.y) {
-			this.y -= enemySpeed;
-		}else if(this.y < player.y) {
-			this.y += enemySpeed;
-		}*/
-		
 	}
 	private void destroyParaChute(){
 		paraChute.paraChute = null;

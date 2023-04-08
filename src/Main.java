@@ -7,7 +7,7 @@ public class Main {
 		JFrame frame = new JFrame();
 		
 		frame.add(game);
-		frame.setTitle("Zeldinha");
+		frame.setTitle("Comando Raid");
 		frame.setLocationRelativeTo(null);
 		frame.pack();
 		

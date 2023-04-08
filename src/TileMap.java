@@ -7,8 +7,6 @@ public class TileMap {
 	private List<Tile> tileList;
 	public TileMap() {
 		tileList = new ArrayList<>();
-		
-
 
 		for(int iterator = 0; iterator < 15*2; iterator++) {
 			tileList.add(new Tile(32*iterator, Game.HEIGHT-32));

@@ -10,7 +10,7 @@ public class Projectile extends Rectangle {
     private double projectileAngle = 0;
 
     public Projectile(int positionX, int positonY,double playerHeight, Point mousePoint) {
-        super(positionX, positonY,16,16	);
+        super(positionX, positonY+(int)playerHeight,16,16	);
         spriteProjectile = SpriteSheet.projectile;
         setDirection(mousePoint);
         projectileSpeedY = 10;

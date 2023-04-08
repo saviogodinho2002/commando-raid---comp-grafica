@@ -12,7 +12,7 @@ public class Player extends Rectangle {
 	double mousey = 0;
 	private double cannonAngle;
 	private double cannonAngleSpeed;
-	
+	private double mouseX,mouseY,directionX,directionY;
 	private int playerSpeed;
 	private BufferedImage cannonGun;
 	private BufferedImage rotateCannonGun;
@@ -20,7 +20,7 @@ public class Player extends Rectangle {
 	
 
 	public Player(int positionX, int positonY) {
-		super(positionX, positonY,32,32	);
+		super(positionX, positonY-36,46,46	);
 		cannonGun = SpriteSheet.cannonGun;
 		rotateCannonGun = SpriteSheet.cannonGun;
 		cannonBase = SpriteSheet.cannonBase;
@@ -30,7 +30,9 @@ public class Player extends Rectangle {
 
 	public void tick(TileMap tileMap, Point mousePoint) {
 		verifyColission(tileMap);
+		setDirection(mousePoint);
 		changeAngleCannon(mousePoint);
+
 	}
 	private void changeAngleCannon(Point mousePoint){
 		if(  mousePoint.x > -Game.WIDTH/2 && mousePoint.x < Game.WIDTH/2 )
@@ -41,6 +43,22 @@ public class Player extends Rectangle {
 		angle = angle*mousex;
 
 		cannonAngle = Math.toRadians(angle);
+
+
+	}
+	private void setDirection(Point mousePoint){
+
+		mouseX = (mousePoint.x ) ;
+		mouseY = (mousePoint.y );
+
+		directionX = (mousePoint.x - this.x) ;
+		directionY = (mousePoint.y - this.y);
+		double magnitude = Math.sqrt(directionX * directionX + directionY * directionY);
+		if(magnitude!=0){
+
+			directionX = directionX /magnitude ;
+			directionY = directionY /magnitude;
+		}
 
 
 	}
