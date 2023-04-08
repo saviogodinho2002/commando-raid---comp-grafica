@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="commando raid clone:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/commando_raid_clone_jar</output-path>
+    <root id="archive" name="commando raid clone.jar">
+      <element id="module-output" name="commando raid clone" />
+      <element id="directory" name="res">
+        <element id="file-copy" path="$PROJECT_DIR$/out/production/commando raid clone/res/spritesheet.png" />
+      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/out/production/commando raid clone/res/spritesheet.png" />
+    </root>
+  </artifact>
+</component>

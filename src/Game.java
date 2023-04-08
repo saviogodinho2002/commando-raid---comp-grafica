@@ -86,7 +86,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			explosion.tick();
 			if(explosion.end())
 				explosions.remove(explosion);
-			if(player.getLife() == 0){
+			if(player.getLife() <= 0){
 
 				JOptionPane.showMessageDialog(this,"Pontos: "+points,"VOCÊ PERDEU!",JOptionPane.WARNING_MESSAGE);
 				System.exit(0);

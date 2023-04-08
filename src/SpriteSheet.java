@@ -15,21 +15,21 @@ public class SpriteSheet {
 	public static BufferedImage paraChute;
 	public SpriteSheet() {
 		try {
-			spriteSheet = ImageIO.read(new File("res/spritesheet.png"));
+			spriteSheet = ImageIO.read(getClass().getResource("res/spritesheet.png"));
 		} catch (IOException error) {
 			
 			
 		}
-		projectile =  this.getSprite(138, 185, 16, 16);
+		projectile =  getSprite(138, 185, 16, 16);
 
-		cannonGun =  this.getSprite(261, 237, 16, 16);
-		cannonBase =  this.getSprite(259, 259, 16, 8);
+		cannonGun =  getSprite(261, 237, 16, 16);
+		cannonBase =  getSprite(259, 259, 16, 8);
 
-		paraChute =  this.getSprite(260, 269, 16, 16);
-		enemy =  this.getSprite(231, 11, 16, 16);
+		paraChute =  getSprite(260, 269, 16, 16);
+		enemy =  getSprite(231, 11, 16, 16);
 		airPlane = getSprite(285, 272, 45, 13);
 
-		explosion =  this.getSprite(191, 185, 16, 16);
+		explosion =  getSprite(191, 185, 16, 16);
 		wallTile = getSprite(283, 238, 16, 16);
 
 	}
