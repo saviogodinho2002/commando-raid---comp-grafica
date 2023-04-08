@@ -31,7 +31,7 @@ public class Player extends Rectangle {
 	public void tick(TileMap tileMap, Point mousePoint) {
 		verifyColission(tileMap);
 		setDirection(mousePoint);
-		changeAngleCannon(mousePoint);
+		//changeAngleCannon(mousePoint);
 
 	}
 	private void changeAngleCannon(Point mousePoint){
@@ -48,18 +48,12 @@ public class Player extends Rectangle {
 	}
 	private void setDirection(Point mousePoint){
 
-		mouseX = (mousePoint.x ) ;
-		mouseY = (mousePoint.y );
-
-		directionX = (mousePoint.x - this.x) ;
-		directionY = (mousePoint.y - this.y);
-		double magnitude = Math.sqrt(directionX * directionX + directionY * directionY);
-		if(magnitude!=0){
-
-			directionX = directionX /magnitude ;
-			directionY = directionY /magnitude;
-		}
-
+		mouseX = mousePoint.x;
+		mouseY = mousePoint.y;
+		directionX = mouseX - x;
+		directionY = mouseY - y;
+		double angleInRadians = Math.atan2(directionY, directionX);
+		cannonAngle = angleInRadians + Math.toRadians(90);
 
 	}
 	private void verifyColission(TileMap tileMap){

@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		mouseLocation = MouseInfo.getPointerInfo().getLocation();
 		frameLocation = this.getLocationOnScreen();
-		Point mousePointXCenter = new Point(mouseLocation.x - frameLocation.x - (WIDTH / 2),mouseLocation.y - frameLocation.y);
+		Point mousePointRelativeByWindow = new Point(mouseLocation.x - frameLocation.x,mouseLocation.y - frameLocation.y);
 		//System.out.println(mousePoint);
 		for (Projectile currentProjectile : projectiles) {
 			currentProjectile.tick();
@@ -64,7 +64,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		}
 
 		tileMap.tick();
-		player.tick(tileMap,mousePointXCenter);
+		player.tick(tileMap,mousePointRelativeByWindow);
 
 
 
