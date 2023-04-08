@@ -1,7 +1,9 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.util.*;
+import java.util.Timer;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
@@ -9,6 +11,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public static int WIDTH = 960, HEIGHT = 960;
 
 	public static int points;
+
 	private Graphics graphics;
 	private Player player;
 	private TileMap tileMap;
@@ -36,6 +39,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		explosions = new LinkedBlockingQueue<>();
 
 		points = 0;
+
 		this.addKeyListener(this);
 		this.addMouseListener(this);
 	}
@@ -67,7 +71,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 			if(enemy.isDead() || enemy.intersects(player)){
 				if(enemy.isDeadOnFloor() || enemy.intersects(player)){
-					explosions.add(new Explosion(enemy.x,enemy.y));
+					explosions.add(new Explosion(enemy.x,enemy.y,player));
 				}
 				enemies.remove(enemy);
 			}
@@ -77,6 +81,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			explosion.tick();
 			if(explosion.end())
 				explosions.remove(explosion);
+			if(player.getLife() == 0){
+
+				JOptionPane.showMessageDialog(this,"Pontos: "+points,"VOCÊ PERDEU!",JOptionPane.WARNING_MESSAGE);
+				System.exit(0);
+			}
 		}
 
 		tileMap.tick();
@@ -128,10 +137,15 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		graphics.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte com tamanho 20
 		graphics.setColor(Color.WHITE); // Define a cor como branca
 		graphics.drawString("Pontos: " + String.valueOf(points), 50, 50);
+		graphics.drawString("Vida: " + String.valueOf(player.getLife()), 50, 75);
+
+
+
+
 		bufferStrategy.show();
 
 
-		
+
 	}
 	public void drawGraphic(int positionX, int positionY,int width ,int height, Color color) {
 		graphics.setColor(color);
@@ -155,9 +169,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 						if(rate < 1){
 							airPlanes.add(new AirPlane(random.nextBoolean(),enemies));
 						}
+
 						
 					}
+
 				}, 0, 1000/60);
+
 		
 	}
 

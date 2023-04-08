@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 public class SpriteSheet {
 	public static BufferedImage spriteSheet;
-	public static BufferedImage playerFront,playerBack,playerLeft,playerRight, cannonGun, cannonBase, projectile;
+	public static BufferedImage playerFront, cannonGun, cannonBase, projectile;
 	public static BufferedImage wallTile;
 	public static BufferedImage enemy,explosion;
 	public static BufferedImage airPlane;

@@ -17,8 +17,8 @@ public class Player extends Rectangle {
 	private BufferedImage cannonGun;
 	private BufferedImage rotateCannonGun;
 	private BufferedImage cannonBase;
-	
 
+	private  int life;
 	public Player(int positionX, int positonY) {
 		super(positionX, positonY-36,46,46	);
 		cannonGun = SpriteSheet.cannonGun;
@@ -26,6 +26,7 @@ public class Player extends Rectangle {
 		cannonBase = SpriteSheet.cannonBase;
 		cannonAngle = 90;
 		playerSpeed = 4;
+		life = 3;
 	}
 
 	public void tick(TileMap tileMap, Point mousePoint) {
@@ -179,5 +180,16 @@ public class Player extends Rectangle {
 
 	public void setCannonBase(BufferedImage cannonBase) {
 		this.cannonBase = cannonBase;
+	}
+
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		this.life = life;
+	}
+	public int damage(){
+		return --life;
 	}
 }

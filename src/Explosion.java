@@ -5,9 +5,12 @@ import java.awt.image.BufferedImage;
 public class Explosion extends Rectangle {
     private BufferedImage explosion;
     private int explosionTime = 60; //1 segundo
-    public Explosion(int explosionX,int exposionY){
+    public Explosion(int explosionX,int exposionY, Player player){
         super(explosionX,exposionY, 46,46);
         explosion = SpriteSheet.deepCopy(SpriteSheet.explosion);
+        if(this.intersects(player)){
+            player.damage();
+        }
     }
     public void tick(){
         float alpha = 254/60f;
