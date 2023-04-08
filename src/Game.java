@@ -16,6 +16,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	private Player player;
 	private TileMap tileMap;
 
+	private Color skyColor;
+	private Font gameFont;
+
 	Point mouseLocation;
 	Point frameLocation;
 
@@ -32,6 +35,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		new SpriteSheet();
 		player = new Player(WIDTH/2, HEIGHT-32*2);
 		tileMap = new TileMap();
+		skyColor = new Color(0x2e,0x95,0xf4);
+		gameFont = new Font("Arial", Font.PLAIN, 20);
 
 		projectiles = new LinkedBlockingQueue<>();
 		enemies = new LinkedBlockingQueue<>();
@@ -108,7 +113,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		graphics = bufferStrategy.getDrawGraphics();
 		
 		
-		drawGraphic(0, 0, WIDTH, HEIGHT, Color.DARK_GRAY);
+		drawGraphic(0, 0, WIDTH, HEIGHT,skyColor );
 		
 		// como as setas do teclado
 		tileMap.render(graphics);
@@ -134,7 +139,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			explosion.render(graphics);
 		}
 		//graphics.getFont().s
-		graphics.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte com tamanho 20
+		graphics.setFont(gameFont); // Define a fonte com tamanho 20
 		graphics.setColor(Color.WHITE); // Define a cor como branca
 		graphics.drawString("Pontos: " + String.valueOf(points), 50, 50);
 		graphics.drawString("Vida: " + String.valueOf(player.getLife()), 50, 75);

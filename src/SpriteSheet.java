@@ -51,14 +51,13 @@ public class SpriteSheet {
 		WritableRaster raster = bi.copyData(bi.getRaster().createCompatibleWritableRaster());
 		return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
-	public static BufferedImage changeAlpha(BufferedImage source, float nalpha){
+	public static BufferedImage changeAlpha(BufferedImage source, float newAlpha){
 
-		BufferedImage alteredImage = new BufferedImage(source.getWidth(), source.getHeight(),
-				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage alteredImage = new BufferedImage(source.getWidth(), source.getHeight(),BufferedImage.TYPE_INT_ARGB);
 
 		Graphics2D g2d = alteredImage.createGraphics();
 
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, nalpha/255f));
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, newAlpha/255f));
 
 
 		g2d.drawImage(source, 0, 0, null);
