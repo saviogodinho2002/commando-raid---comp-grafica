@@ -22,8 +22,8 @@ public class Enemy extends Rectangle{
 		deadByMissile = false;
 		this.enemy =SpriteSheet.enemy;
 	}
-	public void tick(LinkedBlockingQueue<Bullet> projectiles, TileMap tileMap, Player player) {
-		for (Bullet projectile:
+	public void tick(LinkedBlockingQueue<Projectile> projectiles, TileMap tileMap, Player player) {
+		for (Projectile projectile:
 			 projectiles) {
 			if(this.intersects(projectile)){
 

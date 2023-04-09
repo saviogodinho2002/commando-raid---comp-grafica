@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Bomb extends Bullet {
+public class Bomb extends Projectile {
     private int bombSpeedY, bombSpeedX;
     private double mouseX,mouseY,directionX,directionY;
     private double playerHeight;

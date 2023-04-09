@@ -23,7 +23,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 	Point frameLocation;
 
 
-	private LinkedBlockingQueue<Bullet> projectiles;
+	private LinkedBlockingQueue<Projectile> projectiles;
 	private LinkedBlockingQueue<Enemy> enemies;
 
 	private LinkedBlockingQueue<AirPlane> airPlanes;
@@ -55,7 +55,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 		frameLocation = this.getLocationOnScreen();
 		Point mousePointRelativeByWindow = new Point(mouseLocation.x - frameLocation.x,mouseLocation.y - frameLocation.y);
 		//System.out.println(mousePoint);
-		for (Bullet currentProjectile : projectiles) {
+		for (Projectile currentProjectile : projectiles) {
 			currentProjectile.tick();
 			if (spriteOutOfScreen(currentProjectile) ) {
 				projectiles.remove(currentProjectile);
@@ -119,7 +119,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 		// como as setas do teclado
 		tileMap.render(graphics);
 
-		for (Bullet projectile:
+		for (Projectile projectile:
 			 projectiles){
 			projectile.render(graphics);
 
@@ -192,7 +192,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1){
 
-			projectiles.add(new Projectile(player.x+player.width/4,player.y,player.height,mousePoint ));
+			projectiles.add(new Bullet(player.x+player.width/4,player.y,player.height,mousePoint ));
 		} else {
 			//enemies.add(new Enemy(mousePoint.x,mousePoint.y));
 			if(player.isCanBomb()){
