@@ -12,10 +12,11 @@ public class Main {
 		frame.pack();
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		game.setFocusable(true);
+		game.requestFocus();
+
 		frame.setVisible(true);
-		
-		
+
 		Thread thread = new Thread(game);
 		
 		thread.start();

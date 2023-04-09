@@ -12,6 +12,9 @@ public class Player extends Rectangle {
 	double mousey = 0;
 	private double cannonAngle;
 	private double cannonAngleSpeed;
+
+	private boolean toLeft,toRight;
+
 	private double mouseX,mouseY,directionX,directionY;
 	private int playerSpeed;
 	private BufferedImage cannonGun;
@@ -27,11 +30,20 @@ public class Player extends Rectangle {
 		cannonAngle = 90;
 		playerSpeed = 4;
 		life = 3;
+		toLeft = false;
+		toRight = false;
 	}
 
 	public void tick(TileMap tileMap, Point mousePoint) {
 		verifyColission(tileMap);
+		if(toRight){
+			this.x += playerSpeed;
+		}
+		if(toLeft){
+			this.x -= playerSpeed;
+		}
 		setDirection(mousePoint);
+
 		//changeAngleCannon(mousePoint);
 
 	}
@@ -191,5 +203,21 @@ public class Player extends Rectangle {
 	}
 	public int damage(){
 		return --life;
+	}
+
+	public boolean isToRight() {
+		return toRight;
+	}
+
+	public void setToRight(boolean toRight) {
+		this.toRight = toRight;
+	}
+
+	public boolean isToLeft() {
+		return toLeft;
+	}
+
+	public void setToLeft(boolean toLeft) {
+		this.toLeft = toLeft;
 	}
 }
