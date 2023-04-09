@@ -1,17 +1,21 @@
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
-public class Player extends Rectangle {
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+
+public  class Player extends Rectangle {
 	private int playerWidth, playerHeight;
 	private boolean playerRight, playerLeft, playerDown, playerUp;
 	double mousex = 0;
 	double mousey = 0;
 	private double cannonAngle;
 	private double cannonAngleSpeed;
+
+
+
+	private boolean canBomb;
+	private int timeToBomb;
 
 	private boolean toLeft,toRight;
 
@@ -32,6 +36,8 @@ public class Player extends Rectangle {
 		life = 3;
 		toLeft = false;
 		toRight = false;
+		canBomb = true;
+		timeToBomb = 2*60;
 	}
 
 	public void tick(TileMap tileMap, Point mousePoint) {
@@ -43,6 +49,15 @@ public class Player extends Rectangle {
 			this.x -= playerSpeed;
 		}
 		setDirection(mousePoint);
+
+		if(timeToBomb == 0){
+			timeToBomb = 60*2;
+			canBomb = true;
+		}
+
+		if(!canBomb){
+			timeToBomb--;
+		}
 
 		//changeAngleCannon(mousePoint);
 
@@ -219,5 +234,20 @@ public class Player extends Rectangle {
 
 	public void setToLeft(boolean toLeft) {
 		this.toLeft = toLeft;
+	}
+	public boolean isCanBomb() {
+		return canBomb;
+	}
+
+	public void setCanBomb(boolean canBomb) {
+		this.canBomb = canBomb;
+	}
+
+	public int getTimeToBomb() {
+		return timeToBomb;
+	}
+
+	public void setTimeToBomb(int timeToBomb) {
+		this.timeToBomb = timeToBomb;
 	}
 }

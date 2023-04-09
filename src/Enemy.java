@@ -9,6 +9,8 @@ public class Enemy extends Rectangle{
 	private BufferedImage enemy;
 	private boolean dead;
 	private boolean deadOnFloor;
+
+	private boolean deadByMissile;
 	private boolean onGround;
 	ParaChute paraChute;
 	public Enemy(int enemyX,int enemyY) {
@@ -17,15 +19,21 @@ public class Enemy extends Rectangle{
 		dead = false;
 		onGround = false;
 		deadOnFloor = false;
+		deadByMissile = false;
 		this.enemy =SpriteSheet.enemy;
 	}
-	public void tick(LinkedBlockingQueue<Projectile> projectiles, TileMap tileMap, Player player) {
-		for (Projectile projectile:
+	public void tick(LinkedBlockingQueue<Bullet> projectiles, TileMap tileMap, Player player) {
+		for (Bullet projectile:
 			 projectiles) {
 			if(this.intersects(projectile)){
+
+				deadByMissile = (projectile instanceof Bomb);
+
 				this.dead = true;
 				destroyParaChute();
+
 				projectiles.remove(projectile);
+
 				deadOnFloor = false;
 				Game.points++;
 			} else if (!paraChute.destroyed && paraChute.intersects(projectile)) {
@@ -86,6 +94,14 @@ public class Enemy extends Rectangle{
 
 	public void setDead(boolean dead) {
 		this.dead = dead;
+	}
+
+	public boolean isDeadByMissile() {
+		return deadByMissile;
+	}
+
+	public void setDeadByMissile(boolean deadByMissile) {
+		this.deadByMissile = deadByMissile;
 	}
 
 	class ParaChute extends Rectangle{

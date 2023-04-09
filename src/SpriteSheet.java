@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 public class SpriteSheet {
 	public static BufferedImage spriteSheet;
-	public static BufferedImage playerFront, cannonGun, cannonBase, projectile;
+	public static BufferedImage playerFront, cannonGun, cannonBase, projectile,bomb;
 	public static BufferedImage wallTile;
 	public static BufferedImage enemy,explosion;
 	public static BufferedImage airPlane;
@@ -30,6 +30,9 @@ public class SpriteSheet {
 		airPlane = getSprite(285, 272, 45, 13);
 
 		explosion =  getSprite(191, 185, 16, 16);
+
+		bomb =  getSprite(129, 183, 8, 16);
+
 		wallTile = getSprite(283, 238, 16, 16);
 
 	}

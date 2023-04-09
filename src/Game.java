@@ -23,7 +23,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 	Point frameLocation;
 
 
-	private LinkedBlockingQueue<Projectile> projectiles;
+	private LinkedBlockingQueue<Bullet> projectiles;
 	private LinkedBlockingQueue<Enemy> enemies;
 
 	private LinkedBlockingQueue<AirPlane> airPlanes;
@@ -55,7 +55,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 		frameLocation = this.getLocationOnScreen();
 		Point mousePointRelativeByWindow = new Point(mouseLocation.x - frameLocation.x,mouseLocation.y - frameLocation.y);
 		//System.out.println(mousePoint);
-		for (Projectile currentProjectile : projectiles) {
+		for (Bullet currentProjectile : projectiles) {
 			currentProjectile.tick();
 			if (spriteOutOfScreen(currentProjectile) ) {
 				projectiles.remove(currentProjectile);
@@ -75,14 +75,15 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 			enemy.tick(projectiles,tileMap,player);
 
 			if(enemy.isDead() || enemy.intersects(player)){
-				if(enemy.isDeadOnFloor() || enemy.intersects(player)){
-					explosions.add(new Explosion(enemy.x,enemy.y,player));
+				if(enemy.isDeadOnFloor() || enemy.intersects(player) || enemy.isDeadByMissile()){
+					explosions.add(new Explosion(enemy.x,enemy.y,player,enemy.isDeadByMissile(),enemies));
 				}
 				enemies.remove(enemy);
 			}
 		}
 		for (Explosion explosion:
 			 explosions) {
+
 			explosion.tick();
 			if(explosion.end())
 				explosions.remove(explosion);
@@ -118,7 +119,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 		// como as setas do teclado
 		tileMap.render(graphics);
 
-		for (Projectile projectile:
+		for (Bullet projectile:
 			 projectiles){
 			projectile.render(graphics);
 
@@ -194,7 +195,11 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 			projectiles.add(new Projectile(player.x+player.width/4,player.y,player.height,mousePoint ));
 		} else {
 			//enemies.add(new Enemy(mousePoint.x,mousePoint.y));
+			if(player.isCanBomb()){
 
+				projectiles.add(new Bomb(player.x+player.width/4,player.y,player.height,mousePoint ));
+				player.setCanBomb(false);
+			}
 		}
 		System.out.println(mousePoint);
 	}

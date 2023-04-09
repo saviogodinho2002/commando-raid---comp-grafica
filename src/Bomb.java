@@ -1,33 +1,33 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Projectile extends Bullet {
-    private int projectileSpeedY, projectileSpeedX;
+public class Bomb extends Bullet {
+    private int bombSpeedY, bombSpeedX;
     private double mouseX,mouseY,directionX,directionY;
     private double playerHeight;
-    private BufferedImage spriteProjectile;
+    private BufferedImage spriteBomb;
 
     private double projectileAngle = 0;
 
-    public Projectile(int positionX, int positonY,double playerHeight, Point mousePoint) {
-        super(positionX+16, positonY+(int)playerHeight,16,16	);
-        spriteProjectile = SpriteSheet.projectile;
+    public Bomb(int positionX, int positonY, double playerHeight, Point mousePoint) {
+        super(positionX+16, positonY+(int)playerHeight,16,16);
+        spriteBomb = SpriteSheet.bomb;
         setDirection(mousePoint);
-        projectileSpeedY = 10;
-        projectileSpeedX = 10;
+        bombSpeedY = 10;
+        bombSpeedX = 10;
         this.playerHeight = playerHeight;
     }
     public void tick() {
 
 
-        this.y +=  projectileSpeedY * directionY;
-        this.x +=  projectileSpeedX *  directionX;
+        this.y +=  bombSpeedY * directionY;
+        this.x +=  bombSpeedX *  directionX;
 
 
     }
 
     public void render(Graphics graphics) {
-        graphics.drawImage(spriteProjectile, this.x,this.y,this.width,this.height, null);
+        graphics.drawImage(spriteBomb, this.x,this.y,this.width,this.height, null);
 
     }
     private void setDirection(Point mousePoint){

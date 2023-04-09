@@ -1,15 +1,24 @@
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Explosion extends Rectangle {
     private BufferedImage explosion;
     private int explosionTime = 60; //1 segundo
-    public Explosion(int explosionX,int exposionY, Player player){
-        super(explosionX,exposionY, 46,46);
+    public Explosion(int explosionX, int exposionY, Player player, boolean fromBomb, LinkedBlockingQueue<Enemy> enemies){
+        super(explosionX-(64-16),exposionY-64, 128,128);
         explosion = SpriteSheet.deepCopy(SpriteSheet.explosion);
         if(this.intersects(player)){
             player.damage();
+        }
+        if(fromBomb){
+            for (Enemy enemy :
+                    enemies) {
+                    if (this.intersects(enemy)) {
+                        enemies.remove(enemy);
+                    }
+                }
         }
     }
     public void tick(){
