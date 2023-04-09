@@ -68,6 +68,39 @@ public class SpriteSheet {
 		g2d.dispose();
 		return alteredImage;
 	}
+	public static BufferedImage changeColor(BufferedImage image, String color, int newValue) {
+		color = color.toUpperCase();
+
+		int width = image.getWidth();
+		int height = image.getHeight();
+
+		image = deepCopy(image);
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+
+				int rgbColor = image.getRGB(x, y);
+
+				int alpha = (rgbColor >> 24) & 0xFF; // Extrai o valor do canal alfa
+
+				if (alpha == 0) {
+					continue;
+				}
+
+				Color c = new Color(rgbColor);
+				c = switch (color) {
+					case "R" -> new Color(newValue, c.getGreen(), c.getBlue());
+					case "G" -> new Color(c.getRed(), newValue, c.getBlue());
+					case "B" -> new Color(c.getRed(), c.getGreen(), newValue);
+					default -> throw new IllegalArgumentException("Color must be 'R', 'G', or 'B'");
+				};
+
+				image.setRGB(x, y, c.getRGB());
+			}
+		}
+
+		return image;
+	}
 	public static  BufferedImage getSpriteSheet() {
 		return spriteSheet;
 	}

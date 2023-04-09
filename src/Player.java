@@ -102,6 +102,12 @@ public  class Player extends Rectangle {
 	}
 
 	public void render(Graphics graphics) {
+		if(!canBomb){
+			float red = 255/(60.0f*2);
+			red = red * (60*2-timeToBomb);
+			rotateCannonGun = SpriteSheet.changeColor(cannonGun,"r",255-(int)red);
+
+		}
 
 		Graphics2D g2d = (Graphics2D) graphics;
 

@@ -10,7 +10,7 @@ public class Bomb extends Bullet {
     private double projectileAngle = 0;
 
     public Bomb(int positionX, int positonY, double playerHeight, Point mousePoint) {
-        super(positionX+16, positonY+(int)playerHeight,16,16);
+        super(positionX+16, positonY+(int)playerHeight,32,64);
         spriteBomb = SpriteSheet.bomb;
         setDirection(mousePoint);
         bombSpeedY = 10;
