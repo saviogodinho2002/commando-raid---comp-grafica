@@ -12,7 +12,7 @@ public  class Player extends Rectangle {
 	private double cannonAngle;
 	private double cannonAngleSpeed;
 
-
+	private final double scalePercent = 255/(60.0f*2);
 
 	private boolean canBomb;
 	private int timeToBomb;
@@ -103,8 +103,7 @@ public  class Player extends Rectangle {
 
 	public void render(Graphics graphics) {
 		if(!canBomb){
-			float red = 255/(60.0f*2);
-			red = red * (60*2-timeToBomb);
+			double red = scalePercent * (60*2-timeToBomb);
 			rotateCannonGun = SpriteSheet.changeColor(cannonGun,"r",255-(int)red);
 
 		}

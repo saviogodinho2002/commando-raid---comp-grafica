@@ -17,6 +17,7 @@ public class Explosion extends Rectangle {
                     enemies) {
                     if (this.intersects(enemy)) {
                         enemies.remove(enemy);
+                        Game.points++;
                     }
                 }
         }
