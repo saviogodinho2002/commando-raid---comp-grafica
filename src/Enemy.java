@@ -22,9 +22,9 @@ public class Enemy extends Rectangle{
 		deadByMissile = false;
 		this.enemy =SpriteSheet.enemy;
 	}
-	public void tick(LinkedBlockingQueue<Projectile> projectiles, TileMap tileMap, Player player) {
+	public void tick( Player player) {
 		for (Projectile projectile:
-			 projectiles) {
+			 Game.projectiles) {
 			if(this.intersects(projectile)){
 
 				deadByMissile = (projectile instanceof Bomb);
@@ -32,7 +32,7 @@ public class Enemy extends Rectangle{
 				this.dead = true;
 				destroyParaChute();
 
-				projectiles.remove(projectile);
+				Game.projectiles.remove(projectile);
 
 				deadOnFloor = false;
 				Game.points++;
@@ -46,7 +46,7 @@ public class Enemy extends Rectangle{
 		}
 		if(!onGround){
 
-			verifyColission(tileMap);
+			verifyColission(Game.tileMap);
 			paraChute.tick(this);
 		}
 		else {

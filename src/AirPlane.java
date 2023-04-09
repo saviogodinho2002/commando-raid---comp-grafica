@@ -9,9 +9,9 @@ public class AirPlane extends Rectangle {
     BufferedImage airPlane;
     int airPlaneSpeed ;
     boolean fromLeft;
-    LinkedBlockingQueue<Enemy> enemies;
+
     Random random;
-    public AirPlane(boolean fromLeft, LinkedBlockingQueue<Enemy> enemies){
+    public AirPlane(boolean fromLeft){
         super(fromLeft?0:Game.WIDTH, new  Random().nextInt((int)(Game.HEIGHT*0.25)), 64*2,32*2);
         this.fromLeft  = fromLeft;
 
@@ -21,7 +21,7 @@ public class AirPlane extends Rectangle {
             airPlane = SpriteSheet.reverseImage(airPlane);
         }
         airPlaneSpeed = 4;
-        this.enemies = enemies;
+
         random = new Random();
     }
 
@@ -34,7 +34,7 @@ public class AirPlane extends Rectangle {
         }
         double rate = random.nextDouble(100)+1;
         if(rate < 2){
-            enemies.add(new Enemy(this.x,this.y));
+            Game.enemies.add(new Enemy(this.x,this.y));
         }
 		/*if(this.x < player.x) {
 			this.x += enemySpeed;

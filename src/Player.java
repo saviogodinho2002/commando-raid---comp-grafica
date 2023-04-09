@@ -40,8 +40,8 @@ public  class Player extends Rectangle {
 		timeToBomb = 2*60;
 	}
 
-	public void tick(TileMap tileMap, Point mousePoint) {
-		verifyColission(tileMap);
+	public void tick( Point mousePoint) {
+		verifyColission(Game.tileMap);
 		if(toRight){
 			this.x += playerSpeed;
 		}

@@ -12,9 +12,9 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 
 	public static int points;
 
-	private Graphics graphics;
+	private  Graphics graphics;
 	private Player player;
-	private TileMap tileMap;
+	public static TileMap tileMap;
 
 	private Color skyColor;
 	private Font gameFont;
@@ -23,12 +23,12 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 	Point frameLocation;
 
 
-	private LinkedBlockingQueue<Projectile> projectiles;
-	private LinkedBlockingQueue<Enemy> enemies;
+	public static LinkedBlockingQueue<Projectile> projectiles;
+	public static LinkedBlockingQueue<Enemy> enemies;
 
-	private LinkedBlockingQueue<AirPlane> airPlanes;
+	public static LinkedBlockingQueue<AirPlane> airPlanes;
 
-	private LinkedBlockingQueue<Explosion> explosions;
+	public static LinkedBlockingQueue<Explosion> explosions;
 	
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -72,7 +72,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 		}
 		for (Enemy enemy :
 				enemies) {
-			enemy.tick(projectiles,tileMap,player);
+			enemy.tick(player);
 
 			if(enemy.isDead() || enemy.intersects(player)){
 				if(enemy.isDeadOnFloor() || enemy.intersects(player) || enemy.isDeadByMissile()){
@@ -95,7 +95,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 		}
 
 		tileMap.tick();
-		player.tick(tileMap,mousePointRelativeByWindow);
+		player.tick(mousePointRelativeByWindow);
 
 
 
@@ -169,7 +169,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 						render();
 						double rate = random.nextDouble(100);
 						if(rate < 1){
-							airPlanes.add(new AirPlane(random.nextBoolean(),enemies));
+							airPlanes.add(new AirPlane(random.nextBoolean()));
 						}
 
 						
@@ -201,7 +201,6 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 				player.setCanBomb(false);
 			}
 		}
-		System.out.println(mousePoint);
 	}
 
 	@Override
@@ -244,7 +243,6 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println(e);
 	}
 
 
