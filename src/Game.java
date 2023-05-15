@@ -1,7 +1,12 @@
+import jdk.jfr.Unsigned;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.*;
 import java.util.Timer;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -10,7 +15,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 
 	public static int WIDTH = 960, HEIGHT = 960;
 
-	public static int points;
+	public static int score;
 
 	private  Graphics graphics;
 	private Player player;
@@ -29,11 +34,28 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 	public static LinkedBlockingQueue<AirPlane> airPlanes;
 
 	public static LinkedBlockingQueue<Explosion> explosions;
+
+	private JFrame gameFrame;
+
+	public static PrintStream out;
+	public static Scanner scanner;
+
+	@Unsigned
+	public int highScore;
 	
-	public Game() {
+	public Game(JFrame gameFrame) throws FileNotFoundException {
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		new SpriteSheet();
 		new Sound();
+
+		this.gameFrame = gameFrame;
+		File highTxt = new File("res/highscore.txt");
+
+		scanner = new Scanner(highTxt);
+		highScore = scanner.nextInt();
+		out = new PrintStream(highTxt);
+		out.print(highScore);
+
 		player = new Player(WIDTH/2, HEIGHT-32*2);
 		tileMap = new TileMap();
 		skyColor = new Color(0x2e,0x95,0xf4);
@@ -44,7 +66,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 		airPlanes = new LinkedBlockingQueue<>();
 		explosions = new LinkedBlockingQueue<>();
 
-		points = 0;
+		score = 0;
 		this.addMouseListener(this);
 
 		this.addKeyListener(this);
@@ -90,8 +112,9 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 				explosions.remove(explosion);
 			if(player.getLife() <= 0){
 
-				JOptionPane.showMessageDialog(this,"Pontos: "+points,"VOCÊ PERDEU!",JOptionPane.WARNING_MESSAGE);
-				System.exit(0);
+				JOptionPane.showMessageDialog(this,"Pontos: "+ score,"VOCÊ PERDEU!",JOptionPane.WARNING_MESSAGE);
+				///System.exit(0);
+				gameFrame.dispose();
 			}
 		}
 
@@ -143,12 +166,26 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 		//graphics.getFont().s
 		graphics.setFont(gameFont); // Define a fonte com tamanho 20
 		graphics.setColor(Color.WHITE); // Define a cor como branca
-		graphics.drawString("Pontos: " + String.valueOf(points), 50, 50);
-		graphics.drawString("Vida: " + String.valueOf(player.getLife()), 50, 75);
-
+		graphics.drawString("Pontos: " + (score), 50, 50);
+		graphics.drawString("Pontuação mais alta: " + (highScore), 50, 75);
+		graphics.drawString("Vida: " + (player.getLife()), 50, 100);
+		setHighScore();
 
 		bufferStrategy.show();
 
+	}
+	private void setHighScore(){
+		if(score > highScore){
+			try {
+				out = new PrintStream(new File("res/highscore.txt"));
+			} catch (FileNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+			highScore = score;
+			out.print(highScore);
+			out.close();
+
+		}
 	}
 	public void drawGraphic(int positionX, int positionY,int width ,int height, Color color) {
 		graphics.setColor(color);

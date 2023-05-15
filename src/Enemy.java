@@ -1,7 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class Enemy extends Rectangle{
 	private int enemySpeed = 4;
@@ -35,7 +34,7 @@ public class Enemy extends Rectangle{
 				Game.projectiles.remove(projectile);
 
 				deadOnFloor = false;
-				Game.points++;
+				Game.score++;
 			} else if (!paraChute.destroyed && paraChute.intersects(projectile)) {
 				paraChute.destroyed = true;
 				this.enemyGravity *= 4;
@@ -52,7 +51,7 @@ public class Enemy extends Rectangle{
 		else {
 			if(deadOnFloor){
 				this.dead = true;
-				Game.points+=2;
+				Game.score +=2;
 			}else if(this.x < player.x+player.width/2) {
 				enemy = SpriteSheet.rightEnemy;
 				this.x += enemySpeed;

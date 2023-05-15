@@ -12,7 +12,7 @@ public class AirPlane extends Rectangle {
 
     Random random;
     public AirPlane(boolean fromLeft){
-        super(fromLeft?0:Game.WIDTH, new  Random().nextInt((int)(Game.HEIGHT*0.25)), 64*2,32*2);
+        super(fromLeft?0:Game.WIDTH, new  Random().nextInt((int)(Game.HEIGHT*0.25)), 64*3,32*2);
         this.fromLeft  = fromLeft;
 
         airPlane = SpriteSheet.airPlane;
@@ -33,20 +33,10 @@ public class AirPlane extends Rectangle {
             this.x -= airPlaneSpeed;
         }
         double rate = random.nextDouble(100)+1;
-        if(rate < 2){
+        if(rate < 2)
             Game.enemies.add(new Enemy(this.x,this.y));
-        }
-		/*if(this.x < player.x) {
-			this.x += enemySpeed;
-		}else if(this.x > player.x) {
-			this.x -= enemySpeed;
-		}
 
-		if(this.y > player.y) {
-			this.y -= enemySpeed;
-		}else if(this.y < player.y) {
-			this.y += enemySpeed;
-		}*/
+
 
     }
     public void render(Graphics graphics) {

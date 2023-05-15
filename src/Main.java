@@ -1,11 +1,12 @@
 import javax.swing.JFrame;
+import java.io.FileNotFoundException;
 
 public class Main {
 
-	public static void main(String[] args) {
-		Game game = new Game();
+	public static void main(String[] args) throws FileNotFoundException {
 		JFrame frame = new JFrame();
-		
+		Game game = new Game(frame);
+
 		frame.add(game);
 		frame.setTitle("Comando Raid");
 		frame.setLocationRelativeTo(null);
