@@ -31,6 +31,7 @@ public class Sound {
 
             cshoot.open(shootInputStream);
 
+
             cshoot.start();
 
             shootsSound.add(cshoot);
