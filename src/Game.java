@@ -33,6 +33,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		new SpriteSheet();
+		new Sound();
 		player = new Player(WIDTH/2, HEIGHT-32*2);
 		tileMap = new TileMap();
 		skyColor = new Color(0x2e,0x95,0xf4);
@@ -191,7 +192,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 		Point mousePoint = new Point(mouseLocation.x - frameLocation.x ,mouseLocation.y - frameLocation.y);
 
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1){
-
+			Sound.streamShoot();
 			projectiles.add(new Bullet(player.x+player.width/4,player.y,player.height,mousePoint ));
 		} else {
 			//enemies.add(new Enemy(mousePoint.x,mousePoint.y));

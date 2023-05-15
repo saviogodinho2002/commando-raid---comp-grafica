@@ -15,6 +15,7 @@ public class Main {
 		game.setFocusable(true);
 		game.requestFocus();
 
+		frame.setResizable(false);
 		frame.setVisible(true);
 
 		Thread thread = new Thread(game);
