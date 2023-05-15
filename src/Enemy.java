@@ -54,8 +54,11 @@ public class Enemy extends Rectangle{
 				this.dead = true;
 				Game.points+=2;
 			}else if(this.x < player.x+player.width/2) {
+				enemy = SpriteSheet.rightEnemy;
 				this.x += enemySpeed;
+
 			}else if(this.x > player.x-player.width/2) {
+				enemy = SpriteSheet.leftEnemy;
 				this.x -= enemySpeed;
 
 			}

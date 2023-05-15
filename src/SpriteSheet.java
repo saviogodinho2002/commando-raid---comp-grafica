@@ -10,7 +10,7 @@ public class SpriteSheet {
 	public static BufferedImage spriteSheet;
 	public static BufferedImage playerFront, cannonGun, cannonBase, projectile,bomb;
 	public static BufferedImage wallTile;
-	public static BufferedImage enemy,explosion;
+	public static BufferedImage enemy,leftEnemy,rightEnemy,explosion;
 	public static BufferedImage airPlane;
 	public static BufferedImage paraChute;
 	public SpriteSheet() {
@@ -27,6 +27,11 @@ public class SpriteSheet {
 
 		paraChute =  getSprite(260, 269, 16, 16);
 		enemy =  getSprite(231, 11, 16, 16);
+		rightEnemy = getSprite(52,11, 16,16);
+		leftEnemy = reverseImage(rightEnemy);
+
+		enemy =  getSprite(231, 11, 16, 16);
+
 		airPlane = getSprite(285, 272, 45, 13);
 
 		explosion =  getSprite(191, 185, 16, 16);

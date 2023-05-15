@@ -21,6 +21,7 @@ public class Explosion extends Rectangle {
                     }
                 }
         }
+        Sound.streamExplosion();
     }
     public void tick(){
         float alpha = 254/60f;

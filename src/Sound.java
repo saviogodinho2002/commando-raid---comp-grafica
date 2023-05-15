@@ -7,12 +7,14 @@ import java.util.TimerTask;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Sound {
-    public static Clip shoot;
 
     public static LinkedBlockingQueue<Clip> shootsSound;
+    public static LinkedBlockingQueue<Clip> explosionsSound;
     public static AudioInputStream shootInputStream;
+    public static AudioInputStream explosionInputStream;
     public  Sound() {
         shootsSound = new LinkedBlockingQueue<>();
+        explosionsSound = new LinkedBlockingQueue<>();
     }
     public static void streamShoot(){
         try {
@@ -26,15 +28,15 @@ public class Sound {
             DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
 
 
-            Clip cshoot = (Clip) AudioSystem.getLine(info);
+            Clip shoot = (Clip) AudioSystem.getLine(info);
 
 
-            cshoot.open(shootInputStream);
+            shoot.open(shootInputStream);
 
 
-            cshoot.start();
+            shoot.start();
 
-            shootsSound.add(cshoot);
+            shootsSound.add(shoot);
             shootsSound.forEach(clip -> {
                 if(!clip.isRunning()){
                     clip.stop();
@@ -46,6 +48,41 @@ public class Sound {
         }catch (Exception e){
 
         e.printStackTrace();
+
+        }
+    }
+    public static void streamExplosion(){
+        try {
+
+             explosionInputStream = AudioSystem.getAudioInputStream(
+                    new File("res/explosion.wav"));
+
+            AudioFormat audioFormat = explosionInputStream.getFormat();
+
+
+            DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
+
+
+            Clip explosion = (Clip) AudioSystem.getLine(info);
+
+
+            explosion.open(explosionInputStream);
+
+
+            explosion.start();
+
+            explosionsSound.add(explosion);
+            explosionsSound.forEach(clip -> {
+                if(!clip.isRunning()){
+                    clip.stop();
+                    clip.close();
+                    explosionsSound.remove(clip);
+                }
+            });
+
+        }catch (Exception e){
+
+            e.printStackTrace();
 
         }
     }
