@@ -8,7 +8,7 @@ public class StartGameController {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Janela com Botões");
+            JFrame frame = new JFrame("Comando raid");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(960, 960);
             frame.setLayout(new GridBagLayout());

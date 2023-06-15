@@ -131,7 +131,7 @@ public class Game extends Canvas implements Runnable, MouseListener , KeyListene
 	public void render() { //desenha estado
 		BufferStrategy bufferStrategy = this.getBufferStrategy();
 		if(bufferStrategy == null) {
-			this.createBufferStrategy(5);
+			this.createBufferStrategy(2);
 			return;
 		}
 			

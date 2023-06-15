@@ -110,7 +110,6 @@ public  class Player extends Rectangle {
 
 		Graphics2D g2d = (Graphics2D) graphics;
 
-
 		AffineTransform transform = g2d.getTransform();
 
 		int centerX = x + width / 2; // Calcula o centro x da imagem
@@ -118,14 +117,11 @@ public  class Player extends Rectangle {
 
 		g2d.translate(centerX, centerY);
 
-		g2d.rotate(cannonAngle, rotateCannonGun.getWidth() / 2.0, 2*rotateCannonGun.getHeight()); // Rotação em torno do centro da imagem
-
+		g2d.rotate(cannonAngle, rotateCannonGun.getWidth() / 2.0, 2*rotateCannonGun.getHeight()); // Rotação em torno do centro da imagem no x
 
 		g2d.drawImage(rotateCannonGun, -rotateCannonGun.getWidth() / 2, -rotateCannonGun.getHeight() / 2, width, height, null); // Desenho da imagem com translação para o centro
 
-
 		g2d.setTransform(transform);
-		//graphics.drawImage(rotateCannonGun,this.x,this.y-this.width/2,this.width,this.height,null);
 
 		graphics.drawImage(cannonBase,this.x+width/4,this.y+this.width,this.width,this.height,null);
 
