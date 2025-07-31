@@ -1,4 +1,3 @@
-```markdown
 # Commando Raid — Clone em Java
 
 Projeto de Computação Gráfica que recria, em 2D, a dinâmica de **Commando Raid**: controle de um canhão terrestre que abate soldados lançados de aviões. Tudo foi implementado em Java/Swing, sem bibliotecas externas.
@@ -7,47 +6,46 @@ Projeto de Computação Gráfica que recria, em 2D, a dinâmica de **Commando Ra
 
 ## 🕹️ Jogabilidade & Controles
 
-| Ação                           | Tecla / Botão                       |
-|--------------------------------|-------------------------------------|
-| Mover canhão à esquerda        | **A**                               |
-| Mover canhão à direita         | **D**                               |
-| Mirar                           | **Posição do mouse**                |
-| Disparar projétil (bala)       | **Clique esquerdo do mouse**        |
-| Lançar bomba (com recarga ~2 s) | **Qualquer clique não-esquerdo**    |
+| Ação                         | Tecla / Botão                    |
+| ---------------------------- | -------------------------------- |
+| Mover canhão à esquerda      | **A**                            |
+| Mover canhão à direita       | **D**                            |
+| Mirar                        | **Posição do mouse**             |
+| Disparar projétil (bala)     | **Clique esquerdo do mouse**     |
+| Lançar bomba (recarga \~2 s) | **Qualquer clique não-esquerdo** |
 
-- Se qualquer inimigo tocar o solo, o jogo termina.
-- A pontuação máxima persiste em `res/highscore.txt`.
+* Se qualquer inimigo tocar o solo, o jogo termina.
+* A pontuação máxima persiste em `res/highscore.txt`.
 
 ---
 
 ## ✨ Funcionalidades
 
-- **Loop de jogo** com *tick* lógico separado da renderização.
-- **Double-buffering** (`BufferStrategy`) para renderização suave.
-- **Sprite-sheet** único (`res/spritesheet.png`) com todas as texturas.
-- **Efeitos de explosão** (fade-out por alpha-blending).
-- **Som** para tiros e explosões com reuso de `Clip`.
-- **TileMap** simples que repete blocos para formar o chão.
-- **Persistência** automática de high-score.
-- **Menu inicial** (`StartGameController`) com botões *Iniciar* / *Sair*.
+* **Loop de jogo** com *tick* lógico separado da renderização.
+* **Double-buffering** (`BufferStrategy`) para renderização suave.
+* **Sprite-sheet** único (`res/spritesheet.png`) com todas as texturas.
+* **Efeitos de explosão** (fade-out por alpha-blending).
+* **Som** para tiros e explosões com reuso de `Clip`.
+* **TileMap** simples que repete blocos para formar o chão.
+* **Persistência** automática de high-score.
+* **Menu inicial** (`StartGameController`) com botões *Iniciar* / *Sair*.
 
 ---
 
 ## ⚙️ Requisitos
 
-- **JDK 11 ou superior**  
+* **JDK 11 ou superior**
   (usa `jdk.jfr.Unsigned`, presente a partir do JDK 11).
-- Nenhuma dependência externa além da biblioteca padrão Java.
+* Nenhuma dependência externa além da biblioteca padrão Java.
 
 ---
 
 ## 🗂️ Estrutura do Projeto
 
 ```
-
 commando-raid/
 ├── src/
-│   ├── Main.java              # Entry-point: cria JFrame e thread do Game
+│   ├── Main.java              # Entry-point (cria JFrame e thread do Game)
 │   ├── Game.java              # Loop, render, input
 │   ├── Player.java            # Movimento, mira, bomba
 │   ├── Bullet.java / Bomb.java
@@ -59,8 +57,7 @@ commando-raid/
 │   └── StartGameController.java
 ├── res/                       # Sprites, sons, highscore.txt
 └── out/artifacts/...          # JAR pronto (opcional)
-
-````
+```
 
 Todos os `.java` estão no **pacote default** – basta compilar sem declarar `package`.
 
@@ -72,7 +69,7 @@ Todos os `.java` estão no **pacote default** – basta compilar sem declarar `p
 
 ```bash
 java -jar "out/artifacts/commando_raid_clone_jar/commando raid clone.jar"
-````
+```
 
 > A pasta `res/` deve ficar lado a lado ao JAR, pois o jogo carrega recursos por caminho relativo.
 
@@ -105,20 +102,20 @@ java -jar commando-raid.jar
 
 ## 🖥️ Onde entra Computação Gráfica
 
-| Componente                | Arquivo / Método               | Conceito de CG              | Descrição                                                                                  |
-| ------------------------- | ------------------------------ | --------------------------- | ------------------------------------------------------------------------------------------ |
-| **Renderização 2D**       | `Game.render()`                | *Double-buffering*          | Usa `BufferStrategy` para eliminar flicker; `bufferStrategy.show()` após desenhar.         |
-| **Game-loop**             | `Game.run()`                   | *Tempo real*                | Atualiza lógica (`tick`) → desenha (`render`) com alvo de FPS constante.                   |
-| **Sprite-sheet**          | `SpriteSheet.getSprite()`      | *Texturização*              | Recorta sub-imagens (`getSubimage`) de um PNG único.                                       |
-| **Espelhamento**          | `SpriteSheet.reverseImage()`   | *Transformação afim*        | Aplica `AffineTransform` (-1,1) para inverter sprites de inimigos.                         |
-| **Rotação do canhão**     | `Player.render()`              | *Transformação 2D*          | `translate` → `rotate` para orientar o tubo em direção ao mouse.                           |
-| **Alpha-blending**        | `SpriteSheet.changeAlpha()`    | *Composição alfa*           | Usa `AlphaComposite` para gerar fade-out na explosão.                                      |
-| **Manipulação per-pixel** | `SpriteSheet.changeColor()`    | *Processamento de imagem*   | Itera pixels, altera canais RGB mantendo alfa (ex.: canhão fica vermelho durante recarga). |
-| **Tiles**                 | `TileMap.render()`             | *Cenário com grid*          | Repete pequenos sprites para formar o chão.                                                |
-| **Colisão AABB**          | Entidades estendem `Rectangle` | *Bounding box*              | Verifica interseção retangular bala × inimigo, bomba × jogador etc.                        |
-| **Animação**              | `Explosion.tick()`             | *Interpolação de atributos* | Diminui opacidade ao longo do tempo gerando efeito visual.                                 |
+| Componente            | Arquivo / Método               | Conceito de CG            | Descrição                                                                                  |
+| --------------------- | ------------------------------ | ------------------------- | ------------------------------------------------------------------------------------------ |
+| Renderização 2D       | `Game.render()`                | Double-buffering          | Usa `BufferStrategy` para eliminar flicker; `bufferStrategy.show()` após desenhar.         |
+| Game-loop             | `Game.run()`                   | Tempo real                | Atualiza lógica (`tick`) → desenha (`render`) com alvo de FPS constante.                   |
+| Sprite-sheet          | `SpriteSheet.getSprite()`      | Texturização              | Recorta sub-imagens (`getSubimage`) de um PNG único.                                       |
+| Espelhamento          | `SpriteSheet.reverseImage()`   | Transformação afim        | Aplica `AffineTransform` (-1, 1) para inverter sprites de inimigos.                        |
+| Rotação do canhão     | `Player.render()`              | Transformação 2D          | `translate` → `rotate` para orientar o tubo em direção ao mouse.                           |
+| Alpha-blending        | `SpriteSheet.changeAlpha()`    | Composição alfa           | Usa `AlphaComposite` para gerar fade-out na explosão.                                      |
+| Manipulação per-pixel | `SpriteSheet.changeColor()`    | Processamento de imagem   | Itera pixels, altera canais RGB mantendo alfa (ex.: canhão fica vermelho durante recarga). |
+| Tiles                 | `TileMap.render()`             | Cenário com grid          | Repete pequenos sprites para formar o chão.                                                |
+| Colisão AABB          | Entidades estendem `Rectangle` | Bounding box              | Verifica interseção bala × inimigo, bomba × jogador etc.                                   |
+| Animação              | `Explosion.tick()`             | Interpolação de atributos | Diminui opacidade ao longo do tempo gerando efeito visual.                                 |
 
-Esses pontos cobrem fundamentos de CG: representação raster, transformações, otimização de render em tempo real e composição visual.
+Esses pontos cobrem fundamentos de CG: representação raster, transformações, render em tempo real e composição visual.
 
 ---
 
@@ -137,7 +134,7 @@ Esses pontos cobrem fundamentos de CG: representação raster, transformações,
 
 1. Fork → `git checkout -b minha-feature`
 2. Commit ↔ Push
-3. Abra um *Pull Request* descrevendo a mudança
+3. Abra um *Pull Request* descrevendo a mudança.
 
 ---
 
@@ -148,7 +145,3 @@ Esses pontos cobrem fundamentos de CG: representação raster, transformações,
 ---
 
 > Qualquer dúvida ou sugestão, abra uma **Issue** ou entre em contato!
-
-```
-::contentReference[oaicite:0]{index=0}
-```
