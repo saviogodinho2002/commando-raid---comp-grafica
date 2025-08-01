@@ -14,7 +14,6 @@ Projeto de Computação Gráfica que recria, em 2D, a dinâmica de **Commando Ra
 | Disparar projétil (bala)     | **Clique esquerdo do mouse**     |
 | Lançar bomba (recarga \~2 s) | **Qualquer clique não-esquerdo** |
 
-* Se qualquer inimigo tocar o solo, o jogo termina.
 * A pontuação máxima persiste em `res/highscore.txt`.
 
 ---
