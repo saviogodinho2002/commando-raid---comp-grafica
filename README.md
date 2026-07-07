@@ -139,7 +139,7 @@ Esses pontos cobrem fundamentos de CG: representação raster, transformações,
 
 ## 📄 Licença
 
-*Ainda não definida.* Sugestão: [MIT License](https://opensource.org/licenses/MIT).
+[MIT License](https://opensource.org/licenses/MIT).
 
 ---
 
